@@ -8,7 +8,7 @@ public class Test extends NextFTCOpMode {
     }
 
     @Override public void onInit() {
-        // test
+        // test2
     }
     @Override public void onWaitForStart() { }
     @Override public void onStartButtonPressed() { }
