@@ -11,14 +11,14 @@ import dev.nextftc.ftc.NextFTCOpMode;
 @SuppressWarnings("unused")
 @TeleOp(name = "Test Tele")
 public class TestTele extends NextFTCOpMode {
-    public Robot robot = Robot.getInstance();
+    public Robot robot;
 
     {
         addComponents(/* vararg components */);
     }
 
     @Override public void onInit() {
-
+        robot = Robot.getInstance();
     }
 
     @Override public void onStartButtonPressed() { }

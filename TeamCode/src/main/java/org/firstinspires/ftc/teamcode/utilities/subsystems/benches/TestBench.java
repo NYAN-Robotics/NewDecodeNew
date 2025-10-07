@@ -6,8 +6,6 @@ import org.firstinspires.ftc.teamcode.utilities.robot.Robot;
 import dev.nextftc.core.subsystems.Subsystem;
 
 public class TestBench implements Subsystem {
-    private final Robot robot = Robot.getInstance();
-
     @Override
     public void initialize() {
 
