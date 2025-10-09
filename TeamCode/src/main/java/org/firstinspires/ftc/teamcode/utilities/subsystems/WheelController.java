@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.utilities.subsystems;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Consumer;
@@ -14,11 +14,11 @@ public class WheelController {
     private final StatedMotor backLeftWheel;
     private final StatedMotor backRightWheel;
 
-    public WheelController() {
-        this.frontLeftWheel = new StatedMotor(HardwareMap.getMotor(RobotConstants.HardwareName.WHEEL_FL));
-        this.frontRightWheel = new StatedMotor(HardwareMap.getMotor(RobotConstants.HardwareName.WHEEL_FR));
-        this.backLeftWheel = new StatedMotor(HardwareMap.getMotor(RobotConstants.HardwareName.WHEEL_BL));
-        this.backRightWheel = new StatedMotor(HardwareMap.getMotor(RobotConstants.HardwareName.WHEEL_BR));
+    public WheelController(HardwareMap hardwareMap) {
+        this.frontLeftWheel = new StatedMotor(hardwareMap.getMotor(RobotConstants.HardwareName.WHEEL_FL));
+        this.frontRightWheel = new StatedMotor(hardwareMap.getMotor(RobotConstants.HardwareName.WHEEL_FR));
+        this.backLeftWheel = new StatedMotor(hardwareMap.getMotor(RobotConstants.HardwareName.WHEEL_BL));
+        this.backRightWheel = new StatedMotor(hardwareMap.getMotor(RobotConstants.HardwareName.WHEEL_BR));
     }
 
     private StatedMotor getWheelFromName(RobotConstants.HardwareName name) {
@@ -53,5 +53,20 @@ public class WheelController {
 
     public void setWheelPower(double power, RobotConstants.HardwareName... names) {
         runForMotors((motor) -> motor.motor.setPower(power), names);
+    }
+
+
+    public void moveInDirection(double x, double y) {
+        setWheelPower((y + x) * RobotConstants.WHEEL_SPEED, RobotConstants.HardwareName.WHEEL_FL);
+        setWheelPower((y - x) * RobotConstants.WHEEL_SPEED, RobotConstants.HardwareName.WHEEL_FR);
+        setWheelPower((y - x) * RobotConstants.WHEEL_SPEED, RobotConstants.HardwareName.WHEEL_BL);
+        setWheelPower((y + x) * RobotConstants.WHEEL_SPEED, RobotConstants.HardwareName.WHEEL_BR);
+    }
+
+    public void moveInDirection(double x, double y, double rx, double denominator) {
+        setWheelPower((y + x + rx) / denominator * RobotConstants.WHEEL_SPEED, RobotConstants.HardwareName.WHEEL_FL);
+        setWheelPower((y - x - rx) / denominator * RobotConstants.WHEEL_SPEED, RobotConstants.HardwareName.WHEEL_FR);
+        setWheelPower((y - x + rx) / denominator * RobotConstants.WHEEL_SPEED, RobotConstants.HardwareName.WHEEL_BL);
+        setWheelPower((y + x - rx) / denominator * RobotConstants.WHEEL_SPEED, RobotConstants.HardwareName.WHEEL_BR);
     }
 }

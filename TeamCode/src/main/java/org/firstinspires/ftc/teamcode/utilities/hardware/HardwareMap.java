@@ -1,21 +1,26 @@
 package org.firstinspires.ftc.teamcode.utilities.hardware;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-
 import org.firstinspires.ftc.teamcode.utilities.config.core.RobotConstants;
-
-import dev.nextftc.ftc.ActiveOpMode;
 
 
 public class HardwareMap {
-    public static DcMotorEx getMotor(String name) {
-        return (DcMotorEx) hardwareMap.get(DcMotor.class, name);
+    private final com.qualcomm.robotcore.hardware.HardwareMap sdkHardwareMap;
+    public HardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap) {
+        if (hardwareMap == null) {
+            throw new IllegalArgumentException("HardwareMap cannot be null!");
+        }
+        this.sdkHardwareMap = hardwareMap;
+    }
+    public DcMotorEx getMotor(String name) {
+        if (sdkHardwareMap == null) {
+            throw new NullPointerException("HardwareMap was not initialized!");
+        }
+        return (DcMotorEx) sdkHardwareMap.get(DcMotor.class, name);
     }
 
-    public static DcMotorEx getMotor(RobotConstants.HardwareName item) {
+    public DcMotorEx getMotor(RobotConstants.HardwareName item) {
         return getMotor(item.name);
     }
 }
